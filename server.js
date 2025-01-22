@@ -62,6 +62,17 @@ app.get("/next", (req, res) => {
     }
 });
 
+// Endpoint to show a random joke from the list
+app.get("/joke", (req, res) => {
+    if (queue.length > 0) {
+        const randomIndex = Math.floor(Math.random() * jokes.length);
+        const randomJoke = jokes[randomIndex];
+        return res.send(`Random joke: ${randomJoke.joke} (Submitted by: ${randomJoke.user})`);
+    } else {
+        return res.send("The jokes list is currently empty.");
+    }
+});
+
 // POST endpoint to handle the "!queue" command
 app.post("/add-to-queue", (req, res) => {
     const { user, message } = req.body;
